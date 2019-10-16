@@ -8,8 +8,7 @@ import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URL
 import android.os.AsyncTask
-
-
+import android.util.Log
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,8 +33,8 @@ class MainActivity : AppCompatActivity() {
                         lat = location.latitude
                         lon = location.longitude
 
-                        city_name.text = URL("http://samples.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=b1608dd44f80ebacd6e4b7ea11bb6cae").readText()
-
+                        var str = URL("http://samples.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=b1608dd44f80ebacd6e4b7ea11bb6cae").readText()
+                        Log.d("retrieves", str);
 //                        val url1 = URL("http://samples.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=b1608dd44f80ebacd6e4b7ea11bb6cae")
 //                        val url2 = URL("")
 //                        val url3 = URL("")
