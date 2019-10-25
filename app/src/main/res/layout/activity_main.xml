@@ -18,31 +18,667 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/current_view_id"
             android:layout_width="match_parent"
-            android:layout_height="284dp" />
+            android:layout_height="267dp"
+            android:background="@drawable/background"
+            android:backgroundTint="#00C92F2F"
+            tools:context=".MainActivity">
+
+            <ImageButton
+                android:id="@+id/refresh_id"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="362dp"
+                android:layout_marginTop="216dp"
+                android:layout_marginBottom="1dp"
+                android:adjustViewBounds="false"
+                android:contentDescription="@string click to refresh page and weather data"
+                android:scaleType="centerInside"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/refresh" />
+
+            <TextView
+                android:id="@+id/city_name_id"
+                android:layout_width="305dp"
+                android:layout_height="72dp"
+                android:layout_marginStart="129dp"
+                android:layout_marginTop="34dp"
+                android:layout_marginEnd="128dp"
+                android:layout_marginBottom="214dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Please click on the refresh button"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="#FFEBEE"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.339" />
+
+            <TextView
+                android:id="@+id/humidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="36dp"
+                android:text="humidity"
+                android:textAlignment="center"
+                android:textColor="#E1F5FE"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/humidity_id"
+                app:layout_constraintTop_toBottomOf="@+id/high_low" />
+
+            <TextView
+                android:id="@+id/high_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="44dp"
+                android:text="high / low"
+                android:textAlignment="center"
+                android:textColor="#E1F5FE"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/high_low_id"
+                app:layout_constraintTop_toBottomOf="@+id/conditions_id" />
+
+            <TextView
+                android:id="@+id/conditions_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="28dp"
+                android:text="RAIN"
+                android:textAlignment="center"
+                android:textColor="#E1F5FE"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/temp_id"
+                app:layout_constraintTop_toBottomOf="@+id/city_name_id" />
+
+            <TextView
+                android:id="@+id/temp_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="18°C"
+                android:textAlignment="center"
+                android:textColor="#E1F5FE"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/city_name_id" />
+
+            <TextView
+                android:id="@+id/high_low_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="32dp"
+                android:text="18°C / 14°C"
+                android:textAlignment="center"
+                android:textColor="#E1F5FE"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/temp_id" />
+
+            <TextView
+                android:id="@+id/humidity_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="100%"
+                android:textAlignment="center"
+                android:textColor="#E1F5FE"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/high_low_id" />
+
+            <ImageView
+                android:id="@+id/current_img_id"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="60dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/city_name_id"
+                app:srcCompat="@drawable/sunny" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FCE4EC" />
+
+        <TextView
+            android:id="@+id/hr_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="15-HR Forecast"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E8F5E9"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/hourly_view_id"
             android:layout_width="match_parent"
-            android:layout_height="237dp"
-            android:orientation="horizontal" />
+            android:layout_height="164dp"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hr1_id"
+                android:layout_width="82dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/hr1_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr1_temp_id" />
+
+                <TextView
+                    android:id="@+id/hr1_temp_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="21°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr1_img_id" />
+
+                <TextView
+                    android:id="@+id/hr1_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="15h"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/hr1_img_id"
+                    android:layout_width="59dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr1_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hr2_id"
+                android:layout_width="82dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/hr2_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr2_temp_id" />
+
+                <TextView
+                    android:id="@+id/hr2_temp_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="21°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr2_img_id" />
+
+                <TextView
+                    android:id="@+id/hr2_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="18h"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/hr2_img_id"
+                    android:layout_width="59dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr2_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hr3_id"
+                android:layout_width="82dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/hr3_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr3_temp_id" />
+
+                <TextView
+                    android:id="@+id/hr3_temp_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="21°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr3_img_id" />
+
+                <TextView
+                    android:id="@+id/hr3_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="21h"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/hr3_img_id"
+                    android:layout_width="59dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr3_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hr4_id"
+                android:layout_width="82dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/hr4_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr4_temp_id" />
+
+                <TextView
+                    android:id="@+id/hr4_temp_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="21°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr4_img_id" />
+
+                <TextView
+                    android:id="@+id/hr4_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="00h"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/hr4_img_id"
+                    android:layout_width="59dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr4_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/hr5_id"
+                android:layout_width="82dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/hr5_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="11dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr5_temp_id" />
+
+                <TextView
+                    android:id="@+id/hr5_temp_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="21°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr5_img_id" />
+
+                <TextView
+                    android:id="@+id/hr5_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="3h"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/hr5_img_id"
+                    android:layout_width="59dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/hr5_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#FCE4EC" />
+
+        <TextView
+            android:id="@+id/day_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Daily Forecast"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#E8F5E9"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/daily_view_id"
             android:layout_width="match_parent"
-            android:layout_height="210dp">
+            android:layout_height="238dp">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="160dp"
-                android:layout_height="match_parent"
-                android:text="falkdfjl;adkjlfla;djfl;kdjsl;faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafalkdfjl;adkjlfla;djfl;kdjsl;faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafalkdfjl;adkjlfla;djfl;kdjsl;faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafalkdfjl;adkjlfla;djfl;kdjsl;faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaafalkdfjl;adkjlfla;djfl;kdjsl;faaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textStyle="bold" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/day1_id"
+                android:layout_width="137dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/day1_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="4dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.071"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day1_hl_id" />
+
+                <TextView
+                    android:id="@+id/day1_hl_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="18°C / 14°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day1_img_id" />
+
+                <TextView
+                    android:id="@+id/day1_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Thursday"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.493"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/day1_img_id"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.486"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day1_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/day2_id"
+                android:layout_width="137dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/day2_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="4dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.071"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day2_hl_id" />
+
+                <TextView
+                    android:id="@+id/day2_hl_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="18°C / 14°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day2_img_id" />
+
+                <TextView
+                    android:id="@+id/day2_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Friday"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.493"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/day2_img_id"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.486"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day2_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/day3_id"
+                android:layout_width="137dp"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/day3_humid_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="4dp"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.071"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day3_hl_id" />
+
+                <TextView
+                    android:id="@+id/day3_hl_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="18°C / 14°C"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.454"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day3_img_id" />
+
+                <TextView
+                    android:id="@+id/day3_name_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Saturday"
+                    android:textAlignment="center"
+                    android:textColor="#E1F5FE"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.493"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/day3_img_id"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.486"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/day3_name_id"
+                    app:srcCompat="@drawable/cloudy" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
