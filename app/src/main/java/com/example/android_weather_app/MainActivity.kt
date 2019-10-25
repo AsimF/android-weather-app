@@ -1,5 +1,7 @@
 package com.example.android_weather_app
 
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.view.WindowManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.alert
 import org.jetbrains.anko.doAsync
 import java.net.URL
 import java.util.*
@@ -35,9 +38,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        //refresh_button.setOnClickListener {
-        //    update()
-        //}
+        refresh_id.setOnClickListener {
+            update()
+        }
         update()
     }
 
@@ -49,25 +52,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun update() {
-        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-            if (location != null) {
-                lat = location.latitude
-                lon = location.longitude
-                val url1 = "https://api.darksky.net/forecast/bda8906c093400944402ffa53135348d/${lat},${lon}"
-                Log.d("Before API Call", result.toString())
-                //city_name.text = URL(url1).readText().toString()
-//                try {
-//                    //result = URL(url1).readText(Charsets.UTF_16)
-//                    city_name.text = URL(url1).readText()//result.toString()
-//                    Log.d("reached the call", "made it")
-//                } catch (ex : Exception){
-//                    ex.printStackTrace()
-//                } finally {
-//                    Log.d("After API Call", result.toString())
-//                }
-            } else {
-                //city_name.text = "ERROR! Location services not enabled!"
+        doAsync {
+            var lat = 36.3504
+            var lon = 127.3845
+            city_name_id.text="waiting for api call"
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    lat = location.latitude
+                    lon = location.longitude
+                } else {
+
+                }
             }
+            //city_name_id.text = URL("https://api.darksky.net/forecast/bda8906c093400944402ffa53135348d/${lat},${lon}").readText()
+            val geocoder =
+                Geocoder(this@MainActivity, Locale.getDefault())
+            val addresses: List<Address> =
+                geocoder.getFromLocation(lat, lon, 1)
+            val cityName: String = addresses[0].locality
+            city_name_id.text = cityName
         }
     }
 
