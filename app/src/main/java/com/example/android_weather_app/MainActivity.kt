@@ -1,15 +1,19 @@
 package com.example.android_weather_app
 
 import android.location.Location
-import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import kotlinx.android.synthetic.main.activity_main.*
-import java.lang.Exception
+import org.jetbrains.anko.doAsync
 import java.net.URL
+import java.util.*
+import kotlin.concurrent.schedule
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,11 +26,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        refresh_button.setOnClickListener {
-            update()
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        parent_layout_id.setOnClickListener {
+            window.decorView.apply {
+                systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+            }
         }
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        //refresh_button.setOnClickListener {
+        //    update()
+        //}
         update()
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        window.decorView.apply {
+            systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+        }
     }
 
     private fun update() {
@@ -36,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 lon = location.longitude
                 val url1 = "https://api.darksky.net/forecast/bda8906c093400944402ffa53135348d/${lat},${lon}"
                 Log.d("Before API Call", result.toString())
-                city_name.text = URL(url1).readText().toString()
+                //city_name.text = URL(url1).readText().toString()
 //                try {
 //                    //result = URL(url1).readText(Charsets.UTF_16)
 //                    city_name.text = URL(url1).readText()//result.toString()
