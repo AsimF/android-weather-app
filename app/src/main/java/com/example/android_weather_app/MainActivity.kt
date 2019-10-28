@@ -1,6 +1,5 @@
 package com.example.android_weather_app
 
-import android.graphics.drawable.Drawable
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
@@ -17,7 +16,9 @@ import org.jetbrains.anko.doAsync
 import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.round
 
 
@@ -79,7 +80,7 @@ class MainActivity : AppCompatActivity() {
             var current:JSONObject = JSONObject(forecasts).optJSONObject("currently")
             var hourly:JSONArray = JSONObject(forecasts).optJSONObject("hourly").getJSONArray("data")
             var daily:JSONArray = JSONObject(forecasts).optJSONObject("daily").getJSONArray("data")
-            runOnUiThread {
+            runOnUiThread { //must use this, can't run UI on background thread
                 updateCurrent(parseCurrent(current,daily.optJSONObject(0)))
                 updateHourly(parseHourly(hourly))
                 updateDaily(parseDaily(daily))
@@ -96,29 +97,82 @@ class MainActivity : AppCompatActivity() {
     }
     //parse current object
     private fun parseCurrent(result: JSONObject, daily:JSONObject): Forecast {
-        return Forecast(result.optDouble("temperature"),daily.optDouble("temperatureHigh"),daily.optDouble("temperatureLow")
-            ,result.optDouble("humidity")*100.toInt(), result.optString("icon"))
+        return Forecast(result.optDouble("temperature").round(1),daily.optDouble("temperatureHigh").round(1),daily.optDouble("temperatureLow").round(1)
+            ,(result.optDouble("humidity")*100).round(1), result.optString("icon"))
     }
-    //update hourly
-    private fun updateHourly(forecasts:Array<Forecast>){
-
+    //update hourly (yes, I could use a loop here...)
+    private fun updateHourly(forecasts:ArrayList<Forecast>){
+        hr1_temp_id.text = tempC(""+forecasts[0].temp)
+        imgCondition(forecasts[0].conditions, hr1_img_id)
+        hr1_humid_id.text = ""+forecasts[0].humidity+"%"
+        hr2_temp_id.text = tempC(""+forecasts[1].temp)
+        imgCondition(forecasts[1].conditions, hr2_img_id)
+        hr2_humid_id.text = ""+forecasts[1].humidity+"%"
+        hr3_temp_id.text = tempC(""+forecasts[2].temp)
+        imgCondition(forecasts[2].conditions, hr3_img_id)
+        hr3_humid_id.text = ""+forecasts[2].humidity+"%"
+        hr4_temp_id.text = tempC(""+forecasts[3].temp)
+        imgCondition(forecasts[3].conditions, hr4_img_id)
+        hr4_humid_id.text = ""+forecasts[3].humidity+"%"
+        hr5_temp_id.text = tempC(""+forecasts[4].temp)
+        imgCondition(forecasts[4].conditions, hr5_img_id)
+        hr5_humid_id.text = ""+forecasts[4].humidity+"%"
     }
     //parse hourly array
-    private fun parseHourly(result: JSONArray): Array<Forecast> {
-        var size = 0
-        var forecasts = Array<Forecast>(size){Forecast(0.0,0.0,0.0,0.0,"sunny")}
+    private fun parseHourly(result: JSONArray): ArrayList<Forecast> {
+        var forecasts = ArrayList<Forecast>(5)
+        updateTimes()
+        for (i in 1..16 step 3){
+            var r = result.optJSONObject(i)
+            forecasts.add(Forecast(r.optDouble("temperature").round(1),r.optDouble("temperatureHigh").round(1),r.optDouble("temperatureLow").round(1)
+                ,(r.optDouble("humidity")*100).round(1), r.optString("icon")))
+        }
         return forecasts
     }
     //update daily
-    private fun updateDaily(forecasts:Array<Forecast>){
-
+    private fun updateDaily(forecasts:ArrayList<Forecast>){
+        day1_hl_id.text =  tempC(""+forecasts[0].high.toInt()) + " / " + tempC(""+forecasts[0].low.toInt())
+        day1_humid_id.text = ""+forecasts[0].humidity+"%"
+        imgCondition(forecasts[0].conditions, day1_img_id)
+        day2_hl_id.text =  tempC(""+forecasts[1].high.toInt()) + " / " + tempC(""+forecasts[1].low.toInt())
+        day2_humid_id.text = ""+forecasts[1].humidity+"%"
+        imgCondition(forecasts[1].conditions, day2_img_id)
+        day3_hl_id.text =  tempC(""+forecasts[2].high.toInt()) + " / " + tempC(""+forecasts[2].low.toInt())
+        day3_humid_id.text = ""+forecasts[2].humidity+"%"
+        imgCondition(forecasts[2].conditions, day3_img_id)
     }
     //parse daily array
-    private fun parseDaily(result: JSONArray): Array<Forecast> {
-        var size = 0
-        var forecasts = Array<Forecast>(size){Forecast(0.0,0.0,0.0,0.0,"sunny")}
+    private fun parseDaily(result: JSONArray): ArrayList<Forecast> {
+        var forecasts = ArrayList<Forecast>(3)
+        updateDays()
+        for (i in 1..3){
+            var r = result.optJSONObject(i)
+            forecasts.add(Forecast(r.optDouble("temperature").round(1),r.optDouble("temperatureHigh").round(1),r.optDouble("temperatureLow").round(1)
+                ,(r.optDouble("humidity")*100).round(1), r.optString("icon")))
+        }
         return forecasts
     }
+
+    //update the times
+    private fun updateTimes(){
+        val sdf = SimpleDateFormat("HH")
+        hr1_name_id.text = sdf.format(getHrsFrom(1)) + "h"
+        hr2_name_id.text = sdf.format(getHrsFrom(4)) + "h"
+        hr3_name_id.text = sdf.format(getHrsFrom(7)) + "h"
+        hr4_name_id.text = sdf.format(getHrsFrom(10)) + "h"
+        hr5_name_id.text = sdf.format(getHrsFrom(13)) + "h"
+    }
+    //update the days
+    private fun updateDays(){
+        val sdf = SimpleDateFormat("EEEE")
+        day1_name_id.text = sdf.format(getDaysFrom(1))
+        day2_name_id.text = sdf.format(getDaysFrom(2))
+        day3_name_id.text = sdf.format(getDaysFrom(3))
+    }
+//    //get the max of 3hrs per day ***EDIT: Not needed, already calculates the max/min w/DarkSky
+//    private fun maxDaily(){
+//
+//    }
 
     //get image based off of conditions
     private fun imgCondition(condition:String, id:ImageView) {
@@ -135,11 +189,26 @@ class MainActivity : AppCompatActivity() {
         return (temp + 0x00B0.toChar() + "C")
     }
 
-    //round one digit
-    private fun tForm(n:Float):Float{
-        return round(n*100)/100
-    }
-
     //use this class to store forecasts
     data class Forecast(val temp: Double, val high: Double, val low: Double, val humidity: Double, val conditions:String)
+    //round to certain digit
+    fun Double.round(decimals: Int): Double {
+        var multiplier = 1.0
+        repeat(decimals) { multiplier *= 10 }
+        return round(this * multiplier) / multiplier
+    }
+    //calculate the date certain days from current
+    fun getDaysFrom(daysFrom: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_YEAR, +daysFrom)
+
+        return calendar.time
+    }
+    //calculate the date certain hrs from current
+    fun getHrsFrom(hrsFrom: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.HOUR_OF_DAY, +hrsFrom)
+
+        return calendar.time
+    }
 }
